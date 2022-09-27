@@ -30,7 +30,7 @@ public class behaviour : MonoBehaviour
     {
         _forwardDiection = (_frontObject.transform.position - transform.position).normalized;
         _leftDirection = (_leftObject.transform.position - transform.position).normalized;
-        _rightDirection = (_rightObject.transform.position - transform.position).normalized;
+        _rightDirection = (_rightObject.transform.position + transform.position).normalized;
 
 
         if (_isMoving)
@@ -66,7 +66,7 @@ public class behaviour : MonoBehaviour
         Debug.DrawRay(_leftObject.transform.position, transform.forward, Color.yellow);
 
         Ray rightRay = new Ray(_rightObject.transform.position, _rightDirection);
-        Debug.DrawRay(_rightObject.transform.position, transform.forward, Color.yellow);
+        Debug.DrawRay(_rightObject.transform.position, -transform.forward, Color.yellow);
 
 
         if (Physics.Raycast(leftRay, out hit, 1.5f))
@@ -74,6 +74,15 @@ public class behaviour : MonoBehaviour
             if (hit.collider.tag == "pared")
             {
                 possibleDirections.Add(_leftDirection);
+                Debug.Log("Detectada pared izquierda");
+            }
+        }
+        if(Physics.Raycast(rightRay, out hit, 1.5f))
+        {
+            if(hit.collider.tag == "pared")
+            {
+                possibleDirections.Add(_rightDirection);
+                Debug.Log("Detectada pared derecha");
             }
         }
         yield return new WaitForSecondsRealtime(10);
