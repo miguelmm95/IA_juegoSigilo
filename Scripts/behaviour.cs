@@ -8,30 +8,34 @@ public class behaviour : MonoBehaviour
     [SerializeField] private GameObject _leftObject;
     [SerializeField] private GameObject _rightObject;
     private float _movementSpeed = 5f;
+    private float _rotationSpeed = 90f;
+    private Vector3 _rotation;
 
-    RaycastHit hit;
+    //private static System.Random rnd = new System.Random();
 
     public Rigidbody _rb;
+    public int direction;
     public bool _isMoving;
+    public bool _colliding;
+    public bool _rotating;
+    public bool _frontColision = false;
+    public bool _rightColision = false;
+    public bool _leftColision = false;
     public Vector3 _forwardDiection;
-    public Vector3 _leftDirection;
-    public Vector3 _rightDirection;
-    public List<Vector3> possibleDirections;
+    public List<Transform> _observers;
 
-    // Start is called before the first frame update
     void Start()
     {
+        _observers = GetChildren(transform);
+
         _rb = GetComponent<Rigidbody>();
         _isMoving = true;
+        _colliding = false;
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         _forwardDiection = (_frontObject.transform.position - transform.position).normalized;
-        _leftDirection = (_leftObject.transform.position - transform.position).normalized;
-        _rightDirection = (_rightObject.transform.position + transform.position).normalized;
-
 
         if (_isMoving)
         {
@@ -39,52 +43,105 @@ public class behaviour : MonoBehaviour
             transform.Translate(velocity);
         }
 
-        wallDetection();
+        if (_frontColision)
+        {
+            wallDetection();
+        }
+        
+
+        if (_colliding)
+        {
+            enaleObservers();
+        }
+
+        if (_rotating)
+        {
+            transform.Rotate(checkPossiblesDirections());
+            _rotating = false;
+        }
     }
+
 
     void wallDetection()
     {
-        Ray ray = new Ray(transform.position, _forwardDiection);
-        //Ray rightRay = new Ray(rightDetector.position, rightDetector.position);
+        _isMoving = false;
+        _colliding = true;
+    }
 
-        Debug.DrawRay(transform.position, _forwardDiection, Color.red);
-        //Debug.DrawRay(rightDetector.position, transform.forward, Color.blue);
+    List<Transform> GetChildren(Transform parent)
+    {
+        List<Transform> children = new List<Transform>();
 
-        if (Physics.Raycast(ray, out hit, 1.5f))
+        foreach(Transform child in parent)
         {
-            if (hit.collider.tag == "pared")
+            if(child.name != "FrontDetector")
             {
-                _isMoving = false;
-                StartCoroutine(SearchWall());
+                children.Add(child);
             }
+        }
+
+        return children;
+    }
+
+    public Vector3 checkPossiblesDirections()
+    {
+        Debug.Log("izquiedo: " + _leftColision);
+        Debug.Log("derecho: " + _rightColision);
+
+        if (_leftColision && _rightColision)
+        {
+            Debug.Log("Tengo que gira 180º");
+
+        }else if (!_leftColision && !_rightColision)
+        {
+            direction = -1 + 2 * UnityEngine.Random.Range(0, 2);
+            _rotation = new Vector3(0f, 1f, 0f) * _rotationSpeed * direction * Time.deltaTime;
+
+        }
+        else if (!_leftColision)
+        {
+            _rotation = new Vector3(0f, 1f, 0f) * _rotationSpeed * -1;
+
+            Debug.Log("izquiedo: " + _rotation);
+
+        }
+        else
+        {
+            _rotation = new Vector3(0f, 1f, 0f) * _rotationSpeed * 1 * Time.deltaTime;
+            Debug.Log("derecho: " + _rotation);
+        }
+        return _rotation;
+    }
+
+    void enaleObservers()
+    {
+        foreach(Transform child in _observers)
+        {
+            child.gameObject.SetActive(true);
+        }
+        _frontObject.SetActive(false);
+        _colliding = false;
+        _rotating = true;
+    }
+
+    void disableObservers()
+    {
+        foreach (Transform child in _observers)
+        {
+            child.gameObject.SetActive(false);
         }
     }
 
-    IEnumerator SearchWall()
+    void OnTriggerEnter(Collider other)
     {
-        Ray leftRay = new Ray(_leftObject.transform.position, _leftDirection);
-        Debug.DrawRay(_leftObject.transform.position, transform.forward, Color.yellow);
-
-        Ray rightRay = new Ray(_rightObject.transform.position, _rightDirection);
-        Debug.DrawRay(_rightObject.transform.position, -transform.forward, Color.yellow);
-
-
-        if (Physics.Raycast(leftRay, out hit, 1.5f))
+        if (other.tag == "pared")
         {
-            if (hit.collider.tag == "pared")
-            {
-                possibleDirections.Add(_leftDirection);
-                Debug.Log("Detectada pared izquierda");
-            }
+            _frontColision = true;
         }
-        if(Physics.Raycast(rightRay, out hit, 1.5f))
-        {
-            if(hit.collider.tag == "pared")
-            {
-                possibleDirections.Add(_rightDirection);
-                Debug.Log("Detectada pared derecha");
-            }
-        }
-        yield return new WaitForSecondsRealtime(10);
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        _frontColision = false;
     }
 }
