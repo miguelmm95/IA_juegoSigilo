@@ -22,8 +22,11 @@ public class teleportBehaviour : MonoBehaviour
     }
 
     void Update(){
-        if(++waypointDestino == waypointsArray.Count){
-            waypointDestino = 0;
+        if(Vector3.Distance(transform.position, waypointActual) < 2){
+            Debug.Log("He llegado al waypoint");
+            if(++waypointDestino == waypointsArray.Count){
+                waypointDestino = 0;
+            }
             waypointActual = (Vector3) waypointsArray[waypointDestino];
             andando = false;
         }
@@ -39,7 +42,6 @@ public class teleportBehaviour : MonoBehaviour
         transform.LookAt(waypoint);
         transform.position = transform.position + movement;
             //yield return null;
-        print("Ya he llegado");
         /*yield return new WaitForSeconds(3f);
         print("La corutina de movimiento ha finalizado");
         */
