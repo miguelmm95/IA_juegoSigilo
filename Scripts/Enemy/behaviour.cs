@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class behaviour2 : MonoBehaviour
+public class behaviour : MonoBehaviour
 {
     [SerializeField] private GameObject _frontObject;
     [SerializeField] private GameObject _leftObject;
