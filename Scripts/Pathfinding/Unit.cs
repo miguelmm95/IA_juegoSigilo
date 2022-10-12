@@ -6,17 +6,23 @@ public class Unit : MonoBehaviour {
 
 
 	public Transform target;
+    public Transform wayPointPatrol;
 	public float speed = 2;
 	Vector3[] path;
 	int targetIndex;
 	public bool persecuccion = false;
+    public bool returnPatrol = false;
 
 	void Update() {
         if (persecuccion)
         {
 			PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
 		}
-		
+
+        if (returnPatrol)
+        {
+            PathRequestManager.RequestPath(transform.position, wayPointPatrol.position, OnPathFound);
+        }
 	}
 
 
@@ -41,7 +47,7 @@ public class Unit : MonoBehaviour {
 				}
 				currentWaypoint = path[targetIndex];
 			}
-            if (!persecuccion)
+            if (!persecuccion && !returnPatrol)
             {
 				Array.Clear(path, 0, path.Length-1);
 				path[0] = currentWaypoint;

@@ -14,6 +14,7 @@ public class behaviour : MonoBehaviour
     private Vector3 _rotation;
 
     public Rigidbody _rb;
+    public GameController _gc;
     public bool _isMoving;
     public bool _isRotating;
     public bool _rightColision;
@@ -29,7 +30,6 @@ public class behaviour : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-
         if (_isMoving)
         {
             Vector3 velocity =  Vector3.forward * _movementSpeed * Time.deltaTime;
