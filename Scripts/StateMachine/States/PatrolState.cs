@@ -5,10 +5,8 @@ using UnityEngine;
 public class PatrolState : State
 {
     public InvestigateState investigateState;
-    public PersecutionState persecutionState;
 
     public bool goToInvestigate;
-    public bool detectPlayer;
 
     public override State RunCurrentSate()
     {
@@ -16,10 +14,6 @@ public class PatrolState : State
         if (goToInvestigate)
         {
             return investigateState;
-        }
-        else if (detectPlayer)
-        {
-            return persecutionState;
         }
         else
         {

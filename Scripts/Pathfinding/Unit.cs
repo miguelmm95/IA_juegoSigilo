@@ -6,23 +6,53 @@ public class Unit : MonoBehaviour {
 
 
 	public Transform target;
-    public Transform wayPointPatrol;
-	public float speed = 2;
+	private float speed;
 	Vector3[] path;
 	int targetIndex;
-	public bool persecuccion = false;
-    public bool returnPatrol = false;
+	//private bool persecuccion = true;
+	public Transform wayPoint;
 
-	void Update() {
-        if (persecuccion)
+
+	public StateManager _stateManager;
+	public GoBackToPatrolState _goBack;
+
+
+
+    private void Start()
+    {
+		_stateManager = this.GetComponent<StateManager>();
+		_goBack = this.GetComponentInChildren<GoBackToPatrolState>();
+    }
+
+    void Update() {
+
+        if (_stateManager.currentState is InvestigateState)
         {
+			speed = 1;
+
 			PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
 		}
 
-        if (returnPatrol)
-        {
-            PathRequestManager.RequestPath(transform.position, wayPointPatrol.position, OnPathFound);
-        }
+		if (_stateManager.currentState is PersecutionState)
+		{
+			speed = 2;
+
+			PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
+		}
+
+		if (_stateManager.currentState is GoBackToPatrolState)
+		{
+			speed = 2;
+			//persecuccion = true;
+			PathRequestManager.RequestPath(transform.position, wayPoint.position, OnPathFound);
+			//StartCoroutine("Wait");
+
+            if (MathF.Abs((this.transform.position.x - wayPoint.position.x)) < 5 && MathF.Abs((this.transform.position.z - wayPoint.position.z)) < 5)
+            {
+				_goBack.goToInvestigate = false;
+				_goBack.patrolPointReached = true;
+            }
+		}
 	}
 
 
@@ -37,9 +67,10 @@ public class Unit : MonoBehaviour {
 	}
 
 	IEnumerator FollowPath() {
+
 		Vector3 currentWaypoint = path[0];
 		while (true) {
-			
+			Debug.Log(currentWaypoint);
 			if (transform.position == currentWaypoint) {
 				targetIndex ++;
 				if (targetIndex >= path.Length) {
@@ -47,12 +78,12 @@ public class Unit : MonoBehaviour {
 				}
 				currentWaypoint = path[targetIndex];
 			}
-            if (!persecuccion && !returnPatrol)
+            /*if (!persecuccion)
             {
 				Array.Clear(path, 0, path.Length-1);
 				path[0] = currentWaypoint;
 				yield break;
-            }
+            }*/
 			transform.position = Vector3.MoveTowards(transform.position,currentWaypoint,speed * Time.deltaTime);
 			yield return null;
 
@@ -74,4 +105,11 @@ public class Unit : MonoBehaviour {
 			}
 		}
 	}
+
+	/*IEnumerator Wait()
+	{	
+		yield return new WaitForSeconds(2.0f);
+		persecuccion = true;
+
+	}*/
 }

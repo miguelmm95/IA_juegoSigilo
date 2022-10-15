@@ -20,6 +20,17 @@ public class FieldOfView : MonoBehaviour
     public bool deteccion;
     public bool volador;
 
+    public int tiempoEsperaPersecucion;
+    public int tiempoEsperaInvestigacion;
+
+    private int contador;
+
+    public GoBackToPatrolState _goBack;
+    public PatrolState _patrol;
+    public InvestigateState _invetigate;
+    public PersecutionState _persecution;
+    public StateManager _state;
+
     private void Start()
     {
         jugador = GameObject.FindGameObjectWithTag("Player");
@@ -27,6 +38,12 @@ public class FieldOfView : MonoBehaviour
 
         if (gameObject.tag == "volador") volador = true;
         else volador = false;
+
+        _goBack = this.GetComponentInChildren<GoBackToPatrolState>();
+        _patrol = this.GetComponentInChildren<PatrolState>();
+        _invetigate = this.GetComponentInChildren<InvestigateState>();
+        _persecution = this.GetComponentInChildren<PersecutionState>();
+        _state = this.GetComponentInChildren<StateManager>();
     }
 
     void Update()
@@ -68,6 +85,16 @@ public class FieldOfView : MonoBehaviour
                     if (!Physics.Raycast(transform.position, direccion, distancia, ObstacleM))
                     {
                         alerta = true;
+                        if (_state.currentState is PatrolState)
+                        {
+                            _patrol.goToInvestigate = true;
+                        }
+                        else if (_state.currentState is GoBackToPatrolState)
+                        {
+                            _goBack.goToInvestigate = true;
+                            _persecution.playerLost = false;
+                            _invetigate.playerLost = false;
+                        }
                     }
                     else alerta = false;
                 }
@@ -77,6 +104,36 @@ public class FieldOfView : MonoBehaviour
         }
         else if (alerta)
             alerta = false;
+
+        if (!alerta)
+        {
+            if (_state.currentState is InvestigateState || _state.currentState is PersecutionState)
+            {
+                contador += 1;
+                //Debug.Log(contador);
+                if (_state.currentState is InvestigateState)
+                {
+                    if (contador >= 5 * tiempoEsperaInvestigacion)
+                    {
+                        _invetigate.detectPlayer = false;
+                        _patrol.goToInvestigate = false;
+                        _invetigate.playerLost = true;
+                        contador = 0;
+                    }
+                }
+                else
+                {
+                    if (contador >= 5 * tiempoEsperaPersecucion)
+                    {
+                        _patrol.goToInvestigate = false;
+                        _invetigate.detectPlayer = false;
+                        _persecution.playerLost = true;
+                        contador = 0;
+                    }
+                }
+                
+            }
+        }
 
         if (detectado.Length != 0)
         {
@@ -96,6 +153,7 @@ public class FieldOfView : MonoBehaviour
                     if (!Physics.Raycast(transform.position, direccion, distancia, ObstacleM))
                     {
                         deteccion = true;
+                        _invetigate.detectPlayer = true;
                     }
                     else deteccion = false;
                 }

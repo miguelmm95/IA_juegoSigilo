@@ -20,27 +20,38 @@ public class behaviour : MonoBehaviour
     public bool _rightColision;
     public bool _leftColision;
 
+    public StateManager _state;
+    public PatrolState _patrolState;
+
     // Start is called before the first frame update
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
         _isMoving = true;
+        _state = this.GetComponent<StateManager>();
+        _patrolState = this.GetComponentInChildren<PatrolState>();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (_isMoving)
+        if (_patrolState.RunCurrentSate() is PatrolState)
         {
-            Vector3 velocity =  Vector3.forward * _movementSpeed * Time.deltaTime;
-            transform.Translate(velocity);
+            if (_isMoving)
+            {
+                Vector3 velocity = Vector3.forward * _movementSpeed * Time.deltaTime;
+                transform.Translate(velocity);
+            }
+
+            if (_isRotating)
+            {
+                transform.Rotate(turnRight());
+                StartCoroutine(waitingToRotate());
+            }
         }
 
-        if (_isRotating)
-        {
-            transform.Rotate(turnRight());
-            StartCoroutine(waitingToRotate());
-        }
+        
+
     }
 
     IEnumerator waitingToRotate()
@@ -78,8 +89,6 @@ public class behaviour : MonoBehaviour
         {
             _rotation = new Vector3(0f, 1f, 0f) * _rotationSpeed * 1 * Time.deltaTime;
         }
-
-        Debug.Log(_rotation);
         return _rotation;
     }
 

@@ -21,9 +21,6 @@ public class Pathfinding : MonoBehaviour {
 	
 	IEnumerator FindPath(Vector3 startPos, Vector3 targetPos) {
 		
-		Stopwatch sw = new Stopwatch();
-		sw.Start();
-		
 		Vector3[] waypoints = new Vector3[0];
 		bool pathSuccess = false;
 		
@@ -42,8 +39,6 @@ public class Pathfinding : MonoBehaviour {
 				closedSet.Add(currentNode);
 				
 				if (currentNode == targetNode) {
-					sw.Stop();
-					print ("Path found: " + sw.ElapsedMilliseconds + " ms");
 					pathSuccess = true;
 					break;
 				}
@@ -83,13 +78,13 @@ public class Pathfinding : MonoBehaviour {
 			path.Add(currentNode);
 			currentNode = currentNode.parent;
 		}
-		Vector3[] waypoints = SimplifyPath(path);
+		Vector3[] waypoints = SimplifyPath(path, startNode);
 		Array.Reverse(waypoints);
 		return waypoints;
 		
 	}
 	
-	Vector3[] SimplifyPath(List<Node> path) {
+	Vector3[] SimplifyPath(List<Node> path, Node startNode) {
 		List<Vector3> waypoints = new List<Vector3>();
 		Vector2 directionOld = Vector2.zero;
 		
@@ -99,6 +94,8 @@ public class Pathfinding : MonoBehaviour {
 				waypoints.Add(path[i].worldPosition);
 			}
 			directionOld = directionNew;
+			if (i == path.Count - 1 && directionOld != new Vector2(path[i].gridX, path[i].gridY) - new Vector2(startNode.gridX, startNode.gridY))
+				waypoints.Add(path[path.Count - 1].worldPosition);
 		}
 		return waypoints.ToArray();
 	}
