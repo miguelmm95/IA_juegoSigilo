@@ -1093,6 +1093,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: {fileID: 117836446}
+--- !u!114 &1792995894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1792995891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0179c0594d15b240bf5f30d6bb10dbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  "radioInvestigaci\xF3n": 10
+  "radioDetecci\xF3n": 4
+  anguloInvestigacion: 125
+  anguloDeteccion: 68
+  jugador: {fileID: 0}
+  targetM:
+    serializedVersion: 2
+    m_Bits: 128
+  ObstacleM:
+    serializedVersion: 2
+    m_Bits: 64
+  alerta: 0
+  deteccion: 0
+  volador: 0
 --- !u!1 &1793430354
 GameObject:
   m_ObjectHideFlags: 0
@@ -1401,7 +1427,7 @@ PrefabInstance:
     - target: {fileID: 4142163928931840292, guid: 7256fd6b8b108544383035f162759462,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8033168939887148245, guid: 7256fd6b8b108544383035f162759462,
         type: 3}

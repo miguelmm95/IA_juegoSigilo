@@ -47,12 +47,12 @@ public class FieldOfView : MonoBehaviour
 
     private void Check()
     {
-        Collider[] inestigacion = Physics.OverlapSphere(transform.position, radioInvestigación, targetM);
+        Collider[] investigacion = Physics.OverlapSphere(transform.position, radioInvestigación, targetM);
         Collider[] detectado = Physics.OverlapSphere(transform.position, radioDetección, targetM);
 
-        if (inestigacion.Length != 0)
+        if (investigacion.Length != 0)
         {
-            Transform Dtarget = inestigacion[0].transform;
+            Transform Dtarget = investigacion[0].transform;
             Vector3 direccion = (Dtarget.position - transform.position).normalized;
 
             if (Vector3.Angle(transform.forward, direccion) < anguloInvestigacion / 2)
