@@ -28,26 +28,26 @@ public class Unit : MonoBehaviour {
 
         if (_stateManager.currentState is InvestigateState)
         {
-			speed = 1;
+			speed = 5;
 
 			PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
 		}
 
 		if (_stateManager.currentState is PersecutionState)
 		{
-			speed = 2;
+			speed = 10;
 
 			PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
 		}
 
 		if (_stateManager.currentState is GoBackToPatrolState)
 		{
-			speed = 2;
+			speed = 10;
 			//persecuccion = true;
 			PathRequestManager.RequestPath(transform.position, wayPoint.position, OnPathFound);
 			//StartCoroutine("Wait");
 
-            if (MathF.Abs((this.transform.position.x - wayPoint.position.x)) < 5 && MathF.Abs((this.transform.position.z - wayPoint.position.z)) < 5)
+            if (Mathf.Abs((this.transform.position.x - wayPoint.position.x)) < 3.0f && Mathf.Abs((this.transform.position.z - wayPoint.position.z)) < 3.0f)
             {
 				_goBack.goToInvestigate = false;
 				_goBack.patrolPointReached = true;
@@ -70,7 +70,6 @@ public class Unit : MonoBehaviour {
 
 		Vector3 currentWaypoint = path[0];
 		while (true) {
-			Debug.Log(currentWaypoint);
 			if (transform.position == currentWaypoint) {
 				targetIndex ++;
 				if (targetIndex >= path.Length) {
@@ -78,7 +77,8 @@ public class Unit : MonoBehaviour {
 				}
 				currentWaypoint = path[targetIndex];
 			}
-            /*if (!persecuccion)
+			
+			/*if (!persecuccion)
             {
 				Array.Clear(path, 0, path.Length-1);
 				path[0] = currentWaypoint;

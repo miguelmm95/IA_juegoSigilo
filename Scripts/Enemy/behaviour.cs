@@ -21,7 +21,6 @@ public class behaviour : MonoBehaviour
     public bool _leftColision;
 
     public StateManager _state;
-    public PatrolState _patrolState;
 
     // Start is called before the first frame update
     void Start()
@@ -29,13 +28,12 @@ public class behaviour : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         _isMoving = true;
         _state = this.GetComponent<StateManager>();
-        _patrolState = this.GetComponentInChildren<PatrolState>();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (_patrolState.RunCurrentSate() is PatrolState)
+        if (_state.currentState is PatrolState)
         {
             if (_isMoving)
             {
