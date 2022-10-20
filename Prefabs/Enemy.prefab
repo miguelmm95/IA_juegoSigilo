@@ -173,10 +173,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   patrolState: {fileID: 6812348863859332}
   investigateState: {fileID: 6812349326764907}
-  persecutionState: {fileID: 6812348580215614}
   patrolPointReached: 0
   goToInvestigate: 0
-  detectedPlayer: 0
 --- !u!1 &6812349326764906
 GameObject:
   m_ObjectHideFlags: 0
@@ -238,10 +236,10 @@ GameObject:
   - component: {fileID: 5074070377565664365}
   - component: {fileID: 3418728947985043253}
   - component: {fileID: 8991340539402218044}
-  - component: {fileID: 4065956608158947873}
   - component: {fileID: 6812350703546927}
   - component: {fileID: 6812350703546924}
   - component: {fileID: 2655709053160989176}
+  - component: {fileID: 2503411038240873648}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -349,29 +347,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 8
   m_CollisionDetection: 0
---- !u!114 &4065956608158947873
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6812350703546921}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72a8517fc20b52b49b3cf5fb0e899b75, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _frontObject: {fileID: 7220920685169064234}
-  _leftObject: {fileID: 1932592548152488206}
-  _rightObject: {fileID: 3259343660977910693}
-  _rb: {fileID: 0}
-  _gc: {fileID: 0}
-  _isMoving: 0
-  _isRotating: 0
-  _rightColision: 0
-  _leftColision: 0
-  _state: {fileID: 0}
-  _patrolState: {fileID: 0}
 --- !u!114 &6812350703546927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -434,6 +409,28 @@ MonoBehaviour:
   wayPoint: {fileID: 0}
   _stateManager: {fileID: 0}
   _goBack: {fileID: 0}
+--- !u!114 &2503411038240873648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6812350703546921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff4f4cd2c1aba464ab573f37ef359f4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _frontObject: {fileID: 7220920685169064234}
+  _leftObject: {fileID: 1932592548152488206}
+  _rightObject: {fileID: 3259343660977910693}
+  _rb: {fileID: 8991340539402218044}
+  _gc: {fileID: 0}
+  _isMoving: 0
+  _isRotating: 0
+  _rightColision: 0
+  _leftColision: 0
+  _state: {fileID: 0}
 --- !u!1 &1932592548152488206
 GameObject:
   m_ObjectHideFlags: 0
@@ -479,7 +476,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55b61774956006c4bb7392c8e0a30a31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 4065956608158947873}
+  _player: {fileID: 2503411038240873648}
 --- !u!65 &2514515278264397555
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -491,8 +488,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 0.5, z: 0.5}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.2204252, y: 0.5, z: 0.5}
+  m_Center: {x: 0.19279891, y: 0, z: 0}
 --- !u!1 &3259343660977910693
 GameObject:
   m_ObjectHideFlags: 0
@@ -538,7 +535,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b4092eea1aa0d646a049aabe2d985be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 4065956608158947873}
+  _player: {fileID: 2503411038240873648}
 --- !u!65 &5507551364518775463
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -550,8 +547,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 0.5, z: 0.5}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.2204254, y: 0.5, z: 0.5}
+  m_Center: {x: -0.19279893, y: 0, z: 0}
 --- !u!1 &4108452280188902391
 GameObject:
   m_ObjectHideFlags: 0
@@ -692,5 +689,5 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 0.5, z: 0.5}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.5, y: 0.5, z: 1.6668863}
+  m_Center: {x: 0, y: 0, z: -0.19839191}
