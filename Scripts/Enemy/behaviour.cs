@@ -13,6 +13,9 @@ public class behaviour : MonoBehaviour
     private int _direction = 0;
     private Vector3 _rotation;
 
+    public InvestigateState _investigateState;
+    public PersecutionState _persecutionState;
+
     public Rigidbody _rb;
     public GameController _gc;
     public bool _isMoving;
@@ -28,6 +31,8 @@ public class behaviour : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         _isMoving = true;
         _state = this.GetComponent<StateManager>();
+        _investigateState = this.GetComponentInChildren<InvestigateState>();
+        _persecutionState = this.GetComponentInChildren<PersecutionState>();
     }
 
     // Update is called once per frame
@@ -35,6 +40,8 @@ public class behaviour : MonoBehaviour
     {
         if (_state.currentState is PatrolState)
         {
+            _investigateState.playerLost = false;
+            _persecutionState.playerLost = false;
             if (_isMoving)
             {
                 Vector3 velocity = Vector3.forward * _movementSpeed * Time.deltaTime;

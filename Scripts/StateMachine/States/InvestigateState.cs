@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class InvestigateState : State
 {
-    public GoBackToPatrolState goBackToPatrolState;
+    //public GoBackToPatrolState goBackToPatrolState;
+    public PatrolState patrolState;
     public PersecutionState persecutionState;
 
     public bool playerLost;
@@ -14,7 +15,7 @@ public class InvestigateState : State
     {
         if (playerLost)
         {
-            return goBackToPatrolState;
+            return patrolState;
         }
         else if (detectPlayer)
         {

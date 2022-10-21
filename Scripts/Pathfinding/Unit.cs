@@ -10,37 +10,63 @@ public class Unit : MonoBehaviour {
 	Vector3[] path;
 	int targetIndex;
 	//private bool persecuccion = true;
-	public Transform wayPoint;
+	//public Transform wayPoint;
+	public Vector3 puntoInvestigacion;
+	public bool impactoSonido;
 
 
-	public StateManager _stateManager;
-	public GoBackToPatrolState _goBack;
+	public StateManager _state;
+	public PatrolState _patrolState;
+	public InvestigateState _investigateState;
+	public PersecutionState _persecutionState;
+	//public GoBackToPatrolState _goBack;
 
 
 
     private void Start()
     {
-		_stateManager = this.GetComponent<StateManager>();
-		_goBack = this.GetComponentInChildren<GoBackToPatrolState>();
+		_state = this.GetComponent<StateManager>();
+		_investigateState = this.GetComponentInChildren<InvestigateState>();
+		_patrolState = this.GetComponentInChildren<PatrolState>();
+		_persecutionState = this.GetComponentInChildren<PersecutionState>();
+		//_goBack = this.GetComponentInChildren<GoBackToPatrolState>();
     }
 
     void Update() {
 
-        if (_stateManager.currentState is InvestigateState)
+		//_investigateState.playerLost = false;
+		
+        if (_state.currentState is InvestigateState)
         {
 			speed = 5;
 
-			PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
+			if(impactoSonido){
+				PathRequestManager.RequestPath(transform.position, puntoInvestigacion, OnPathFound);
+				impactoSonido = false;
+				if(Vector3.Distance(this.transform.position, puntoInvestigacion) <= 0.5f){
+					_patrolState.goToInvestigate = false;
+					_investigateState.playerLost = true;
+					
+				}
+			}
+			else{
+				Debug.Log(_investigateState.playerLost);
+				PathRequestManager.RequestPath(transform.position, puntoInvestigacion, OnPathFound);
+				if(Vector3.Distance(this.transform.position, puntoInvestigacion) <= 0.5f){
+					_patrolState.goToInvestigate = false;
+					_investigateState.playerLost = true;
+				}
+			}
 		}
 
-		if (_stateManager.currentState is PersecutionState)
+		if (_state.currentState is PersecutionState)
 		{
-			speed = 10;
+			speed = 3;
 
 			PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
 		}
 
-		if (_stateManager.currentState is GoBackToPatrolState)
+		/*if (_state.currentState is GoBackToPatrolState)
 		{
 			speed = 10;
 			//persecuccion = true;
@@ -52,7 +78,7 @@ public class Unit : MonoBehaviour {
 				_goBack.goToInvestigate = false;
 				_goBack.patrolPointReached = true;
             }
-		}
+		}*/
 	}
 
 

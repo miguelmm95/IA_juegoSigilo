@@ -46,6 +46,9 @@ public class Lata : MonoBehaviour
     }
     void OnTriggerEnter(Collider other){
         if(other.gameObject.tag == "enemy"){
+            Unit enemy = other.GetComponent<Unit>();
+            enemy.puntoInvestigacion = posicion;
+            enemy.impactoSonido = true;
             StateManager state = other.GetComponent<StateManager>();
             Debug.Log(state.currentState);
             PatrolState patrol = other.GetComponentInChildren<PatrolState>();

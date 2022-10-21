@@ -30,6 +30,8 @@ public class FieldOfView : MonoBehaviour
     public InvestigateState _invetigate;
     public PersecutionState _persecution;
     public StateManager _state;
+    public Spawner spawner;
+    public GameObject waypointSpawner;
 
     private void Start()
     {
@@ -44,6 +46,7 @@ public class FieldOfView : MonoBehaviour
         _invetigate = this.GetComponentInChildren<InvestigateState>();
         _persecution = this.GetComponentInChildren<PersecutionState>();
         _state = this.GetComponentInChildren<StateManager>();
+
     }
 
     void Update()
@@ -87,14 +90,16 @@ public class FieldOfView : MonoBehaviour
                         alerta = true;
                         if (_state.currentState is PatrolState)
                         {
+                            Unit enemy = this.GetComponent<Unit>();
+                            enemy.puntoInvestigacion = jugador.transform.position;
                             _patrol.goToInvestigate = true;
                         }
-                        else if (_state.currentState is GoBackToPatrolState)
+                        /*else if (_state.currentState is GoBackToPatrolState)
                         {
                             _goBack.goToInvestigate = true;
                             _persecution.playerLost = false;
                             _invetigate.playerLost = false;
-                        }
+                        }*/
                     }
                     else alerta = false;
                 }
@@ -125,9 +130,8 @@ public class FieldOfView : MonoBehaviour
                 {
                     if (contador >= 5 * tiempoEsperaPersecucion)
                     {
-                        _patrol.goToInvestigate = false;
-                        _invetigate.detectPlayer = false;
-                        _persecution.playerLost = true;
+                        Destroy(gameObject);
+                        spawner.contador--;
                         contador = 0;
                     }
                 }
