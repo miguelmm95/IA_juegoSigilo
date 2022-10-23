@@ -11,11 +11,18 @@ public class Movement : MonoBehaviour
     private CanThrowing canThrowing;
     float turnSmoothVelocity;
     public float turnSmoothTime = 0.2f;
+    public int llaves = 0;
+    public GameObject paredFinal;
+    public GameObject[] Arrayllaves;
+    public GameObject jugador;
+    public GameObject spawn;
     // Start is called before the first frame update
     void Start()
     {
         controller = GetComponent<CharacterController>();
         canThrowing = GetComponent<CanThrowing>();
+
+        jugador = GameObject.FindGameObjectWithTag("Player");
     }
 
     // Update is called once per frame
@@ -43,5 +50,33 @@ public class Movement : MonoBehaviour
             controller.Move(direction * speed * Time.deltaTime);
 
         }
+
+        if (llaves == 4)
+        {
+            Destroy(paredFinal);
+        }
     }
+
+    void OnTriggerEnter(Collider collision)
+    {
+        if (collision.gameObject.tag == "llave")
+        {
+            llaves++;
+            collision.gameObject.SetActive(false);
+        }
+
+        else if (collision.gameObject.tag == "enemy") Death();
+
+    }
+
+    void Death()
+    {
+        foreach (GameObject llave in Arrayllaves)
+        {
+            llave.SetActive(true);
+        }
+
+        jugador.transform.position = spawn.transform.position;
+    }
+
 }
