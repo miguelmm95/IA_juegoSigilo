@@ -41,11 +41,11 @@ public class FieldOfView : MonoBehaviour
         if (gameObject.tag == "volador") volador = true;
         else volador = false;
 
-        _goBack = this.GetComponentInChildren<GoBackToPatrolState>();
-        _patrol = this.GetComponentInChildren<PatrolState>();
-        _invetigate = this.GetComponentInChildren<InvestigateState>();
-        _persecution = this.GetComponentInChildren<PersecutionState>();
-        _state = this.GetComponentInChildren<StateManager>();
+        _goBack = GetComponentInChildren<GoBackToPatrolState>();
+        _patrol = GetComponentInChildren<PatrolState>();
+        _invetigate = GetComponentInChildren<InvestigateState>();
+        _persecution = GetComponentInChildren<PersecutionState>();
+        _state = GetComponentInChildren<StateManager>();
 
     }
 
@@ -90,7 +90,7 @@ public class FieldOfView : MonoBehaviour
                         alerta = true;
                         if (_state.currentState is PatrolState)
                         {
-                            Unit enemy = this.GetComponent<Unit>();
+                            Unit enemy = GetComponent<Unit>();
                             enemy.puntoInvestigacion = jugador.transform.position;
                             _patrol.goToInvestigate = true;
                         }

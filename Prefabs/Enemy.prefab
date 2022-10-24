@@ -219,7 +219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec7341d091383904d8c003d974fad948, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  goBackToPatrolState: {fileID: 6812349234040458}
+  patrolState: {fileID: 0}
   persecutionState: {fileID: 6812348580215614}
   playerLost: 0
   detectPlayer: 0
@@ -345,7 +345,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 8
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!114 &6812350703546927
 MonoBehaviour:
@@ -393,6 +393,8 @@ MonoBehaviour:
   _invetigate: {fileID: 0}
   _persecution: {fileID: 0}
   _state: {fileID: 0}
+  spawner: {fileID: 0}
+  waypointSpawner: {fileID: 0}
 --- !u!114 &2655709053160989176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -406,9 +408,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  wayPoint: {fileID: 0}
-  _stateManager: {fileID: 0}
-  _goBack: {fileID: 0}
+  puntoInvestigacion: {x: 0, y: 0, z: 0}
+  impactoSonido: 0
+  _state: {fileID: 0}
+  _patrolState: {fileID: 0}
+  _investigateState: {fileID: 0}
+  _persecutionState: {fileID: 0}
 --- !u!114 &2503411038240873648
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -424,6 +429,8 @@ MonoBehaviour:
   _frontObject: {fileID: 7220920685169064234}
   _leftObject: {fileID: 1932592548152488206}
   _rightObject: {fileID: 3259343660977910693}
+  _investigateState: {fileID: 0}
+  _persecutionState: {fileID: 0}
   _rb: {fileID: 8991340539402218044}
   _gc: {fileID: 0}
   _isMoving: 0

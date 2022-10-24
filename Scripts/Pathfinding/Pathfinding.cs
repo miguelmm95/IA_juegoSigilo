@@ -11,7 +11,8 @@ public class Pathfinding : MonoBehaviour {
 	
 	void Awake() {
 		requestManager = GetComponent<PathRequestManager>();
-		grid = GetComponent<Grid>();
+
+        grid = GetComponent<Grid>();
 	}
 	
 	
@@ -66,7 +67,7 @@ public class Pathfinding : MonoBehaviour {
 		if (pathSuccess) {
 			waypoints = RetracePath(startNode,targetNode);
 		}
-		requestManager.FinishedProcessingPath(waypoints,pathSuccess);
+        requestManager.FinishedProcessingPath(waypoints,pathSuccess);
 		
 	}
 	

@@ -38,7 +38,7 @@ public class teleportBehaviour : MonoBehaviour
 
     void Update(){
 
-        if(Vector3.Distance(transform.position, waypointActual) < 2){
+        if(Vector3.Distance(transform.position, waypointActual) < 0.5){
             if(++waypointDestino == waypointsArray.Count)
                 waypointDestino = 0;
             waypointAnterior = waypointActual;
@@ -101,7 +101,7 @@ public class teleportBehaviour : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            playerDetected = true;
+            playerDetected = false;
 
         }
     }

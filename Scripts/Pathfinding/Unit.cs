@@ -6,7 +6,7 @@ public class Unit : MonoBehaviour {
 
 
 	public Transform target;
-	private float speed;
+	public float speed;
 	Vector3[] path;
 	int targetIndex;
 	//private bool persecuccion = true;
@@ -25,10 +25,10 @@ public class Unit : MonoBehaviour {
 
     private void Start()
     {
-		_state = this.GetComponent<StateManager>();
-		_investigateState = this.GetComponentInChildren<InvestigateState>();
-		_patrolState = this.GetComponentInChildren<PatrolState>();
-		_persecutionState = this.GetComponentInChildren<PersecutionState>();
+		_state = GetComponent<StateManager>();
+		_investigateState = GetComponentInChildren<InvestigateState>();
+		_patrolState = GetComponentInChildren<PatrolState>();
+		_persecutionState = GetComponentInChildren<PersecutionState>();
 		//_goBack = this.GetComponentInChildren<GoBackToPatrolState>();
     }
 
@@ -61,8 +61,15 @@ public class Unit : MonoBehaviour {
 
 		if (_state.currentState is PersecutionState)
 		{
-			speed = 3;
+            if(this.tag == "nemesis")
+            {
+                speed = 2;
+            }
+            else{
+                speed = 3;
+            }
 
+            Debug.Log(target.tag);
 			PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
 		}
 
