@@ -50,7 +50,7 @@ public class Unit : MonoBehaviour {
 				}
 			}
 			else{
-				Debug.Log(_investigateState.playerLost);
+				//Debug.Log(_investigateState.playerLost);
 				PathRequestManager.RequestPath(transform.position, puntoInvestigacion, OnPathFound);
 				if(Vector3.Distance(this.transform.position, puntoInvestigacion) <= 0.5f){
 					_patrolState.goToInvestigate = false;

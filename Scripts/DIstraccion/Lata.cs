@@ -50,7 +50,7 @@ public class Lata : MonoBehaviour
             enemy.puntoInvestigacion = posicion;
             enemy.impactoSonido = true;
             StateManager state = other.GetComponent<StateManager>();
-            Debug.Log(state.currentState);
+            //Debug.Log(state.currentState);
             PatrolState patrol = other.GetComponentInChildren<PatrolState>();
             if(state.currentState is PatrolState){
                 patrol.goToInvestigate = true;
