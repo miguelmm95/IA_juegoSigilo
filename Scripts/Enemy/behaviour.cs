@@ -50,8 +50,40 @@ public class behaviour : MonoBehaviour
 
             if (_isRotating)
             {
-                transform.Rotate(turnRight());
-                StartCoroutine(waitingToRotate());
+                
+                //StartCoroutine(waitingToRotate());
+
+                if (_leftColision && _rightColision)
+                {
+                    _rotation = new Vector3(0f, 1f, 0f) * 180f * 1;
+
+                }
+                else if (!_leftColision && !_rightColision)
+                {
+                    if (_direction == 0)
+                    {
+                        _direction = -1 + 2 * UnityEngine.Random.Range(0, 2);
+                    }
+                    _rotation = new Vector3(0f, 1f, 0f) * _rotationSpeed * _direction;
+
+                }
+                else if (!_leftColision)
+                {
+                    _rotation = new Vector3(0f, 1f, 0f) * _rotationSpeed * -1;
+                }
+                else
+                {
+                    _rotation = new Vector3(0f, 1f, 0f) * _rotationSpeed * 1;
+                }
+                //return _rotation;
+                disableObservers();
+                transform.Rotate(_rotation);
+                _isRotating = false;
+                _leftColision = false;
+                _rightColision = false;
+                _isMoving = true;
+
+
             }
         }
 
@@ -62,39 +94,7 @@ public class behaviour : MonoBehaviour
     IEnumerator waitingToRotate()
     {
         yield return new WaitForSeconds(1);
-        _isRotating = false;
-        disableObservers();
-        _leftColision = false;
-        _rightColision = false;
-        _isMoving = true;
-    }
 
-    public Vector3 turnRight()
-    {
-
-        if(_leftColision && _rightColision)
-        {
-            _rotation = new Vector3(0f, 1f, 0f) * 180f * 1 * Time.deltaTime;
-
-        }
-        else if(!_leftColision && !_rightColision)
-        {
-            if(_direction == 0)
-            {
-                _direction = -1 + 2 * UnityEngine.Random.Range(0, 2);
-            }
-            _rotation = new Vector3(0f, 1f, 0f) * _rotationSpeed * _direction * Time.deltaTime;
-
-        }
-        else if (!_leftColision)
-        {
-            _rotation = new Vector3(0f, 1f, 0f) * _rotationSpeed * -1 * Time.deltaTime;
-        }
-        else
-        {
-            _rotation = new Vector3(0f, 1f, 0f) * _rotationSpeed * 1 * Time.deltaTime;
-        }
-        return _rotation;
     }
 
     void enableObservers()
@@ -118,6 +118,7 @@ public class behaviour : MonoBehaviour
             _isMoving = false;
             _isRotating = true;
             enableObservers();
+            StartCoroutine("waitingToRotate");
         }
     }
 }
