@@ -346,7 +346,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 126
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!114 &6812350703546927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -408,6 +408,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  speed: 0
   puntoInvestigacion: {x: 0, y: 0, z: 0}
   impactoSonido: 0
   _state: {fileID: 0}
@@ -455,7 +456,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5935968923225812368
 Transform:
   m_ObjectHideFlags: 0
@@ -495,8 +496,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.2204252, y: 0.5, z: 0.5}
-  m_Center: {x: 0.19279891, y: 0, z: 0}
+  m_Size: {x: 2.00205, y: 0.5, z: 0.81790733}
+  m_Center: {x: -0.19801334, y: 0, z: -0.052984238}
 --- !u!1 &3259343660977910693
 GameObject:
   m_ObjectHideFlags: 0
@@ -514,7 +515,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6444777624647312758
 Transform:
   m_ObjectHideFlags: 0
@@ -554,8 +555,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.2204254, y: 0.5, z: 0.5}
-  m_Center: {x: -0.19279893, y: 0, z: 0}
+  m_Size: {x: 1.9887044, y: 0.5, z: 0.81790876}
+  m_Center: {x: 0.19134057, y: 0, z: -0.026492357}
 --- !u!1 &4108452280188902391
 GameObject:
   m_ObjectHideFlags: 0
@@ -678,7 +679,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7220920685169064234}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1.8}
+  m_LocalPosition: {x: -0.04, y: 0, z: 1.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -696,5 +697,5 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 0.5, z: 1.6668863}
-  m_Center: {x: 0, y: 0, z: -0.19839191}
+  m_Size: {x: 0.79141605, y: 0.5, z: 2.1437497}
+  m_Center: {x: 0.039738536, y: 0, z: 0.4639175}
